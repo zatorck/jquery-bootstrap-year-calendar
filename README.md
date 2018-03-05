@@ -1,23 +1,23 @@
 # jQuery and Bootstrap 4 Year Calendar
 This is simple jQuery and Bootstrap 4 calendar. Hope some1 will like it.
 
-##DEMO
+## DEMO
 [Simple demo](https://allset.pl/zatorck/jquery-bootstrap-year-calendar/examples/basic.html "Simple demo")
 
-##Author
+## Author
 Piotr Zatorski
 [Allset](https://allset.pl "Allset")
 
-##Instalation
+## Instalation
 Download `jquery.bootstrap.year.calendar.css` and `jquery.bootstrap.year.calendar.js` or `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.calendar.min.js` and include them in right places on your site.
 
-##Basic Usage
+## Basic Usage
 ```html
   <div class="calendar"></div>
   <script> $('#calendar').calendar();</script>
 ```
 
-##Options example
+## Options example
 You need to choose option when initalizing calendar like this
 ```html
 <script>
@@ -27,7 +27,7 @@ You need to choose option when initalizing calendar like this
 </script>
 ```
 
-##Options refenece
+## Options refenece
 `showHeaders` - determine if show months name (default: *true*) (accepts: *boolean*)
 
 `startYear` - start from this year (default is current year) (accepts: *integer*)
@@ -46,7 +46,7 @@ You need to choose option when initalizing calendar like this
 
 `colsXL` - bootstrap XL cols  (default: *3*) (accepts: *integer*  from 1 to 12)
 
-##Events
+## Events
 There are 3 events available at the moment. You can use is simply calling it, like in example.
 
 ```html
