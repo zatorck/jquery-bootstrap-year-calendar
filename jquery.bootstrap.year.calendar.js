@@ -1,7 +1,7 @@
 (function ($) {
 
     $.fn.calendar = function () {
-        
+
         var currentDate = new Date();
         var currentYear = currentDate.getFullYear();
         var firstDayOfCurrentYear = new Date(currentYear, 0).getDay();
