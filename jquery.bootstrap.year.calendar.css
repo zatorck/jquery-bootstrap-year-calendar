@@ -5,27 +5,36 @@
 
  * @author Piotr Zatorski
  */
-.jqyc{
+.jqyc {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
 .jqyc-months .table td, .jqyc-months .table th {
     border-top: 0px;
     text-align: center;
 }
 
-
-.jqyc-not-empty-td:hover{
+.jqyc-not-empty-td:hover {
+    cursor: pointer;
     background-color: #157EFB;
     color: #FFF;
     border-radius: 0.25rem;
 }
 
-.jqyc-year-chooser .jqyc-year{
+.jqyc-not-empty-td:hover .text-danger {
+    color: #FFF !important;
+}
+
+.jqyc-year-chooser .jqyc-year {
     text-align: center;
 }
 
-.jqyc-year-chooser{
+.jqyc-year-chooser {
     padding: 1rem 0;
     margin-bottom: 1rem;
+}
+
+.jqyc-appended{
+    background-color: #f6f7f8;
 }

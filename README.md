@@ -5,11 +5,11 @@ This is simple jQuery and Bootstrap 4 calendar. Hope some1 will like it.
 [Simple demo](https://allset.pl/zatorck/jquery-bootstrap-year-calendar/examples/basic.html "Simple demo")
 
 ## Author
-Piotr Zatorski
-[Allset](https://allset.pl "Allset")
+Piotr Zatorski  
+Website: [allset.pl](https://allset.pl "Allset")
 
 ## Instalation
-Download `jquery.bootstrap.year.calendar.css` and `jquery.bootstrap.year.calendar.js` or `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.calendar.min.js` and include them in right places on your site.
+Download `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.calendar.min.js` and include them in right places on your site.
 
 ## Basic Usage
 ```html
@@ -28,27 +28,82 @@ You need to choose option when initalizing calendar like this
 ```
 
 ## Options refenece
-`showHeaders` - determine if show months name (default: *true*) (accepts: *boolean*)
+Option name: `showHeaders`  
+Description:  determine if show months name  
+Default: *true*  
+Accepts: *boolean*  
+  
+Option name: `startYear`  
+Description:  start calendar from this year  
+Default: current year  
+Accepts: *integer*  
+  
+  Option name: `maxYear`  
+Description:  max year to show  
+Default: *null*  
+Accepts: *integer*  
+  
+  Option name: `minYear`  
+Description:  min year to show  
+Default: *null*  
+Accepts: *integer*  
+  
+  Option name: `cols`  
+Description:  add  bootstrap cols-*cols* class to months view  
+Default: *12*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colsSm`  
+Description:  add  bootstrap cols-sm-*cols* class to months view  
+Default: *6*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colMd`  
+Description:  add  bootstrap cols-md-*cols* class to months view  
+Default: *4*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colsLg`  
+Description:  add  bootstrap cols-lg-*cols* class to months view  
+Default: *3*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colsXl`  
+Description:  add  bootstrap cols-xl-*cols* class to months view  
+Default: *3*  
+Accepts: *integer*  (1-12)  
 
-`startYear` - start from this year (default is current year) (accepts: *integer*)
+## Functions example
+```html
+<div class="calendar"></div>
+$('.calendar').calendar();
+$('.calendar').calendar('appendText', '(3)', 2018, 3, 4);
+```
 
-`maxYear` - max year to show (default: *null*) (accepts: *integer* or *null*)
+## Function refence
+Function name: `appendText`  
+Description; Append text to specyfic day.  
+Parameters: *(text*(**string**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)* 
 
-`minYear` - min year to show  (default: *null*) (accepts: *integer* or *null*)
+#### Protip for *appendText*  function
+If you want to use it with chaning year funcionality, you need to use event called `changeYear`. See this example:
+```html
+<div class="calendar"></div>
+<script>
+    $('.calendar').calendar();
 
-`cols` - bootstrap cols  (default: *12*) (accepts: *integer*  from 1 to 12)
+    appendToCalendar();
+    $('.calendar').on('jqyc.changeYear', function (event) {
+        appendToCalendar();
+    });
 
-`colsSm` - bootstrap SM cols  (default: *6*) (accepts: *integer*  from 1 to 12)
+    function appendToCalendar() {
+        $('.calendar').calendar('appendText', '(3)', 2018, 3, 4);
+    }
+</script>
+```
 
-`colsMd` - bootstrap MD cols  (default: *4*) (accepts: *integer*  from 1 to 12)
-
-`colsLG` - bootstrap LG cols  (default: *3*) (accepts: *integer*  from 1 to 12)
-
-`colsXL` - bootstrap XL cols  (default: *3*) (accepts: *integer*  from 1 to 12)
-
-## Events
-There are 3 events available at the moment. You can use is simply calling it, like in example.
-
+## Event example
 ```html
 <div class="container">
     <div class="calendar"></div>
@@ -78,3 +133,52 @@ There are 3 events available at the moment. You can use is simply calling it, li
     });
 </script>
 ```
+
+## Events reference
+There are 4 events available at the moment. You can use is simply calling it, like in example.  
+
+Event name: `jqyc.changeYearToPrevious`  
+Tiggered: When year is changed to previous  
+  
+Event name: `jqyc.changeYearToNext` .  
+Tiggered: When year is changed to next  
+  
+ Event name: `jqyc.changeYear` .  
+Tiggered: When year is changed to any  
+  
+Event name: `jqyc.dayChoose` .  
+Tiggered: When any day is choosen  
+
+## l10n
+Localization is very easy. You can simply localize Your calendar by passing options at the calendar declaration. See example above.
+```html
+<div class="calendar"></div>
+<script>
+    $('.calendar').calendar({
+        l10n:{
+            jan: "Styczeń",
+            feb: "Luty",
+            mar: "Marzec",
+            apr: "Kwiecień",
+            may: "Maj",
+            jun: "Czerwiec",
+            jul: "Lipiec",
+            aug: "Sierpień",
+            sep: "Wrzesień",
+            oct: "Październik",
+            nov: "Listopad",
+            dec: "Grudzień",
+            mn: "Pm",
+            tu: "Wt",
+            we: 'Śr',
+            th: 'Cz',
+            fr: 'Pt',
+            sa: 'So',
+            su: 'Nd'
+        }
+    });
+</script>
+```
+
+
+
