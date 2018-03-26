@@ -23,7 +23,6 @@ Description:  choose boostrap compatibile
 Default: *4*  
 Accepts: *integer (3 or 4)* 
  
-## Options refenece
 Option name: `showHeaders`  
 Description:  determine if show months name  
 Default: *true*  
@@ -99,7 +98,7 @@ Description:  add  bootstrap cols-xl-*cols* class to months view   (IGNORE IT IN
 Default: *3*  
 Accepts: *integer*  (1-12)  
   
-Option name: `addClassOnClick`  
+Option name: `addUniqueClassOnClick`  
 Description:  add  class to day on click  
 Default: *false*  
 Accepts: *integer*  (1-12)  
