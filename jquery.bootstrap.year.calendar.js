@@ -17,10 +17,29 @@
         hide: function () {
             this.hide();
         },
+        recalcHeight: function () {
+            recalcHeight();
+        },
+        clearText: function (year, month, day) {
+
+            this.find(
+                    '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
+                    ).removeClass('jqyc-appended').text(day);
+            recalcHeight();
+        },
+        clearTextFromAll: function () {
+
+            this.find('.jqyc-appended').each(function () {
+                $(this).removeClass('jqyc-appended').text($(this).data('day-of-month'));
+            });
+            recalcHeight();
+        },
         appendText: function (text, year, month, day, classes = "small text-danger") {
+
             this.find(
                     '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
                     ).addClass('jqyc-appended').append(' <span class="' + classes + '">' + text + '</span>');
+            recalcHeight();
         }
     };
     $.fn.calendar = function (options) {
@@ -57,46 +76,112 @@
             }
 
             function triggerDayChoose() {
-
-
+                var choosenYear = $(this).data('year');
+                var choosenMonth = $(this).data('month');
+                var choosenDay = $(this).data('day-of-month');
                 if (options.minYear != null && options.minMonth != null && options.minDay != null) {
-                    var choosenYear = $(this).data('year');
-                    var choosenMonth = $(this).data('month');
-                    var choosenDay = $(this).data('day-of-month');
+
                     var date = new Date(choosenYear, choosenMonth, choosenDay);
                     if (parseInt(choosenYear) <= parseInt(options.minYear)) {
                         if (parseInt(choosenMonth) < parseInt(options.minMonth) || (parseInt(choosenMonth) == parseInt(options.minMonth) && parseInt(choosenDay) < parseInt(options.minDay))) {
-                            alert(options.minDayMessage);
+                            if (options.minDayMessage != null) {
+                                alert(options.minDayMessage);
+                            }
+                            $calendar.trigger('jqyc.notMinDayChoose');
+                            $calendar.trigger('jqyc.outOfRangeDayChoose');
                             return false;
                         }
                     }
                 }
 
                 if (options.maxYear != null && options.maxMonth != null && options.maxDay != null) {
-                    var choosenYear = $(this).data('year');
-                    var choosenMonth = $(this).data('month');
-                    var choosenDay = $(this).data('day-of-month');
+
                     var date = new Date(choosenYear, choosenMonth, choosenDay);
                     if (parseInt(choosenYear) <= parseInt(options.maxYear)) {
                         if (parseInt(choosenMonth) < parseInt(options.maxMonth) || (parseInt(choosenMonth) == parseInt(options.maxMonth) && parseInt(choosenDay) < parseInt(options.maxDay))) {
-                            alert(options.maxDayMessage);
+                            if (options.maxDayMessage != null) {
+                                alert(options.maxDayMessage);
+                            }
+                            $calendar.trigger('jqyc.notMaxDayChoose');
+                            $calendar.trigger('jqyc.outOfRangeDayChoose');
                             return false;
                         }
                     }
                 }
 
-                if (options.addUniqueClassOnClick) {
+                if (options.mode == 'rangepicker') {
+                    if ($calendar.data('rangepicker-start-choosen') != true) {
+                        $calendar.data('rangepicker-start-day-of-month', choosenDay);
+                        $calendar.data('rangepicker-start-month', choosenMonth);
+                        $calendar.data('rangepicker-start-year', choosenYear);
+                        $calendar.data('rangepicker-start-choosen', true);
+                        $(this).addClass('jqyc-start-day-of-month');
+                    } else if ($calendar.data('rangepicker-end-choosen') != true) {
+
+                        if (options.maxDaysToChoose) {
+
+
+                            var startDay = [$calendar.data('rangepicker-start-day-of-month'), $calendar.data('rangepicker-start-month'), $calendar.data('rangepicker-start-year')];
+                            var endDay = [choosenDay, choosenMonth, choosenYear];
+                            var startDate = new Date(startDay[2], startDay[1], startDay[0]);
+                            var endDate = new Date(endDay[2], endDay[1], endDay[0]);
+                            var daysBettweenDates = Math.round((startDate - endDate) / (1000 * 60 * 60 * 24));
+                            if ((options.maxDaysToChoose - 1) < Math.abs(daysBettweenDates)) {
+                                if (options.maxDaysToChooseMessage) {
+                                    alert(options.maxDaysToChooseMessage + options.maxDaysToChoose)
+                                }
+                                $('.jqyc-range-choosen-between').removeClass('jqyc-range-choosen-between');
+                                $calendar.data('rangepicker-end-day-of-month', false);
+                                $calendar.data('rangepicker-end-month', false);
+                                $calendar.data('rangepicker-end-year', false);
+                                $calendar.data('rangepicker-end-choosen', false);
+                                $calendar.find('.jqyc-end-day-of-month').removeClass('jqyc-end-day-of-month');
+                                $calendar.find('.jqyc-start-day-of-month').removeClass('jqyc-start-day-of-month');
+                                $calendar.data('rangepicker-start-day-of-month', false);
+                                $calendar.data('rangepicker-start-month', false);
+                                $calendar.data('rangepicker-start-year', false);
+                                $calendar.data('rangepicker-start-choosen', false);
+                                return false;
+                            }
+                        }
+
+                        $calendar.data('rangepicker-end-day-of-month', choosenDay);
+                        $calendar.data('rangepicker-end-month', choosenMonth);
+                        $calendar.data('rangepicker-end-year', choosenYear);
+                        $calendar.data('rangepicker-end-choosen', true);
+
+
+
+                        $(this).addClass('jqyc-end-day-of-month');
+                        addRagepickerClassBetweenDays('jqyc-range-choosen-between');
+                        $calendar.trigger('jqyc.rangeChoose');
+                    } else {
+                        $('.jqyc-range-choosen-between').removeClass('jqyc-range-choosen-between');
+                        $calendar.data('rangepicker-end-day-of-month', false);
+                        $calendar.data('rangepicker-end-month', false);
+                        $calendar.data('rangepicker-end-year', false);
+                        $calendar.data('rangepicker-end-choosen', false);
+                        $calendar.find('.jqyc-end-day-of-month').removeClass('jqyc-end-day-of-month');
+                        $calendar.find('.jqyc-start-day-of-month').removeClass('jqyc-start-day-of-month');
+                        $calendar.data('rangepicker-start-day-of-month', choosenDay);
+                        $calendar.data('rangepicker-start-month', choosenMonth);
+                        $calendar.data('rangepicker-start-year', choosenYear);
+                        $calendar.data('rangepicker-start-choosen', true);
+                        $(this).addClass('jqyc-start-day-of-month');
+                    }
+                }
+
+                if (options.addUniqueClassOnClick && options.mode == 'classic') {
                     var uniqueClass = options.addUniqueClassOnClick;
                     $('.' + uniqueClass).removeClass(uniqueClass);
                     $(this).addClass(uniqueClass);
                 }
 
-                $calendar.data('day-of-month', $(this).data('day-of-month'));
-                $calendar.data('month', $(this).data('month'));
-                $calendar.data('year', $(this).data('year'));
+                $calendar.data('day-of-month', choosenDay);
+                $calendar.data('month', choosenMonth);
+                $calendar.data('year', choosenYear);
                 $calendar.trigger('jqyc.dayChoose');
             }
-
 
             return methods.init.apply(this, arguments);
         } else {
@@ -123,6 +208,9 @@
         colsMd: 4,
         colsLg: 3,
         colsXl: 3,
+        maxDaysToChoose: false,
+        maxDaysToChooseMessage: 'Maximum days to choose is: ',
+        mode: 'classic',
         addUniqueClassOnClick: false,
         l10n: {
             jan: "January",
@@ -316,18 +404,15 @@
             $calendar.find('.jqyc-next-year').hide();
         }
         $calendar.trigger('jqyc.changeYear');
-        biggestHeight = 0;
-        $('.jqyc-month').each(function () {
-            var height = $(this).height();
-            if (height > biggestHeight) {
-                biggestHeight = height;
-            }
-        });
-        $('.jqyc-month').css('height', biggestHeight);
+        recalcHeight();
         var choosenYear = $calendar.data('year');
         var choosenMonth = $calendar.data('month');
         var choosenDayOfMonth = $calendar.data('day-of-month');
         $calendar.find('.jqyc-not-empty-td[data-day-of-month="' + choosenDayOfMonth + '"][data-month="' + choosenMonth + '"][data-year="' + choosenYear + '"]').addClass(settings.addUniqueClassOnClick);
+
+        if (settings.mode == 'rangepicker') {
+            addRagepickerClassBetweenDays('jqyc-range-choosen-between');
+        }
     }
 
     function jqycGetMonthHTMLStringWithData(firstDay, month, year, days = 31) {
@@ -360,11 +445,136 @@
             d++;
         }
 
-        return {monthHTMLString: monthHTMLString, firstDayOfPreviousMonth: (i % 7)};
+
+
+        return {
+            monthHTMLString: monthHTMLString, firstDayOfPreviousMonth: (i % 7)};
+    }
+
+    function recalcHeight() {
+        biggestHeight = 0;
+        $('.jqyc-month').css('height', 'inherit');
+        $('.jqyc-month').each(function () {
+            var height = $(this).height();
+            if (height > biggestHeight) {
+                biggestHeight = height;
+                console.log(height);
+            }
+        });
+        $('.jqyc-month').css('height', biggestHeight);
+
+    }
+    function addRagepickerClassBetweenDays(addClass) {
+        if ($calendar.data('rangepicker-end-choosen') != true) {
+            return;
+        }
+        startDay = [$calendar.data('rangepicker-start-day-of-month'), $calendar.data('rangepicker-start-month'), $calendar.data('rangepicker-start-year')];
+        endDay = [$calendar.data('rangepicker-end-day-of-month'), $calendar.data('rangepicker-end-month'), $calendar.data('rangepicker-end-year')];
+        var startDate = new Date(startDay[2], startDay[1], startDay[0]);
+        var endDate = new Date(endDay[2], endDay[1], endDay[0]);
+        if (startDate > endDate) {
+            var newEndDay = startDay;
+            var startDay = endDay;
+            var endDay = newEndDay;
+        }
+
+
+        startYear = startDay[2];
+        startMonth = startDay[1];
+        startDay = startDay[0];
+        endYear = endDay[2];
+        endMonth = endDay[1];
+        endDay = endDay[0];
+        var fullYearsBetweenYears = [];
+        startYearToIterate = startYear;
+        while (startYearToIterate != endYear) {
+            fullYearsBetweenYears.push(startYearToIterate + 1)
+            startYearToIterate++;
+        }
+        if (fullYearsBetweenYears.length == 0) {
+            var fullMonthsBetweenMonths = [];
+            startMonthToIterate = startMonth
+            while (startMonthToIterate != endMonth) {
+                fullMonthsBetweenMonths.push(startMonthToIterate + 1)
+                startMonthToIterate++;
+            }
+            if (fullMonthsBetweenMonths.length == 0) {
+                var fullDaysBetweenDays = [];
+                startDayToIterate = startDay;
+                while (startDayToIterate <= endDay) {
+                    fullDaysBetweenDays.push(startDayToIterate + 1)
+                    startDayToIterate++;
+                    $calendar.find('.jqyc-not-empty-td[data-year="' + startYear + '"][data-month="' + startMonth + '"][data-day-of-month="' + (startDayToIterate - 1) + '"]').addClass(addClass);
+                }
+            } else {
+                startDayToIterate = startDay;
+                while (startDayToIterate <= 31) {
+                    $calendar.find('.jqyc-not-empty-td[data-year="' + startYear + '"][data-month="' + startMonth + '"][data-day-of-month="' + (startDayToIterate + 1) + '"]').addClass(addClass);
+                    startDayToIterate++
+                }
+                endDayToIterate = 1;
+                while (endDayToIterate <= endDay) {
+                    $calendar.find('.jqyc-not-empty-td[data-year="' + endYear + '"][data-month="' + endMonth + '"][data-day-of-month="' + (endDayToIterate - 1) + '"]').addClass(addClass);
+                    endDayToIterate++
+                }
+                startMonthToIterate = startMonth + 1;
+                while (startMonthToIterate < endMonth) {
+                    startDayToIterate = 1;
+                    while (startDayToIterate <= 32) {
+                        $calendar.find('.jqyc-not-empty-td[data-year="' + endYear + '"][data-month="' + startMonthToIterate + '"][data-day-of-month="' + (startDayToIterate - 1) + '"]').addClass(addClass);
+                        startDayToIterate++;
+                    }
+                    startMonthToIterate++;
+                }
+            }
+        } else {
+            startDayToIterate = startDay;
+            while (startDayToIterate <= 31) {
+                $calendar.find('.jqyc-not-empty-td[data-year="' + startYear + '"][data-month="' + startMonth + '"][data-day-of-month="' + (startDayToIterate + 0) + '"]').addClass(addClass);
+                startDayToIterate++;
+            }
+            endDayToIterate = endDay;
+            while (endDayToIterate >= 1) {
+                $calendar.find('.jqyc-not-empty-td[data-year="' + endYear + '"][data-month="' + endMonth + '"][data-day-of-month="' + (endDayToIterate - 0) + '"]').addClass(addClass);
+                endDayToIterate--;
+            }
+            startMonthToIterate = startMonth + 1;
+            while (startMonthToIterate <= 13) {
+                startDayToIterate = 1;
+                while (startDayToIterate <= 32) {
+                    $calendar.find('.jqyc-not-empty-td[data-year="' + startYear + '"][data-month="' + startMonthToIterate + '"][data-day-of-month="' + (startDayToIterate - 1) + '"]').addClass(addClass);
+                    startDayToIterate++;
+                }
+                startMonthToIterate++;
+            }
+
+            endMonthToIterate = endMonth - 1;
+            while (endMonthToIterate >= 1) {
+                endDayToIterate = 32;
+                while (endDayToIterate >= 1) {
+                    $calendar.find('.jqyc-not-empty-td[data-year="' + endYear + '"][data-month="' + endMonthToIterate + '"][data-day-of-month="' + (endDayToIterate - 1) + '"]').addClass(addClass);
+                    endDayToIterate--;
+                }
+                endMonthToIterate--;
+            }
+
+            startYearToIterate = startYear + 1;
+            while (startYearToIterate < endYear) {
+                startMonthToIterate = 1;
+                while (startMonthToIterate <= 13) {
+                    startDayToIterate = 1;
+                    while (startDayToIterate <= 32) {
+                        $calendar.find('.jqyc-not-empty-td[data-year="' + startYearToIterate + '"][data-month="' + startMonthToIterate + '"][data-day-of-month="' + (startDayToIterate - 1) + '"]').addClass(addClass);
+                        startDayToIterate++;
+                    }
+                    startMonthToIterate++;
+                }
+                startYearToIterate++
+            }
+        }
     }
 
 
+
 }(jQuery));
-
-
 

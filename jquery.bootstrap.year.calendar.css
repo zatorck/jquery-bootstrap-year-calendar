@@ -38,3 +38,22 @@
 .jqyc-appended{
     background-color: #f6f7f8;
 }
+
+.jqyc-start-day-of-month {
+    background-color: #157EFB;
+    color: #FFF;
+    border-radius: 0.25rem;
+}
+
+.jqyc-end-day-of-month {
+    background-color: #157EFB;
+    color: #FFF;
+    border-radius: 0.25rem;
+}
+
+
+.jqyc-range-choosen-between{
+    background-color: #157EFB;
+    color: #FFF;
+    border-radius: 0.25rem;
+}
