@@ -33,12 +33,12 @@ Description:  max year to show
 Default: *null*
 Accepts: *integer*
 
-  Option name: `minYear`
+ Option name: `minYear`
 Description:  min year to show
 Default: *null*
 Accepts: *integer*
 
-  Option name: `cols`
+Option name: `cols`
 Description:  add  bootstrap cols-*cols* class to months view
 Default: *12*
 Accepts: *integer*  (1-12)
@@ -63,12 +63,17 @@ Description:  add  bootstrap cols-xl-*cols* class to months view
 Default: *3*
 Accepts: *integer*  (1-12)
 
+Option name: `addClassOnClick`
+Description:  add  class to day on click
+Default: *false*
+Accepts: *integer*  (1-12)
+
 ## Options example
 You need to choose option when initalizing calendar like this
 ```html
 <script>
 	$('#calendar').calendar({
-		showHeader: false
+		showHeaders: false
 	});
 </script>
 ```
@@ -117,7 +122,7 @@ Tiggered: When year is changed to any
 
 Event name: `jqyc.dayChoose` .
 Tiggered: When any day is choosen
-
+  
 ## Event example
 ```html
 <div class="container">
