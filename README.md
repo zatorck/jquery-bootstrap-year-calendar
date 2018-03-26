@@ -18,56 +18,56 @@ Download `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.cal
 ```
 
 ## Options refenece
-Option name: `showHeaders`
-Description:  determine if show months name
-Default: *true*
-Accepts: *boolean*
-
-Option name: `startYear`
-Description:  start calendar from this year
-Default: current year
-Accepts: *integer*
-
-  Option name: `maxYear`
-Description:  max year to show
-Default: *null*
-Accepts: *integer*
-
- Option name: `minYear`
-Description:  min year to show
-Default: *null*
-Accepts: *integer*
-
-Option name: `cols`
-Description:  add  bootstrap cols-*cols* class to months view
-Default: *12*
-Accepts: *integer*  (1-12)
-
-Option name: `colsSm`
-Description:  add  bootstrap cols-sm-*cols* class to months view
-Default: *6*
-Accepts: *integer*  (1-12)
-
-Option name: `colMd`
-Description:  add  bootstrap cols-md-*cols* class to months view
+Option name: `showHeaders`  
+Description:  determine if show months name  
+Default: *true*  
+Accepts: *boolean*  
+  
+Option name: `startYear`  
+Description:  start calendar from this year  
+Default: current year  
+Accepts: *integer*  
+  
+  Option name: `maxYear`  
+Description:  max year to show  
+Default: *null*  
+Accepts: *integer*  
+  
+ Option name: `minYear`  
+Description:  min year to show  
+Default: *null*  
+Accepts: *integer*  
+  
+Option name: `cols`  
+Description:  add  bootstrap cols-*cols* class to months view  
+Default: *12*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colsSm`  
+Description:  add  bootstrap cols-sm-*cols* class to months view  
+Default: *6*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colMd`  
+Description:  add  bootstrap cols-md-*cols* class to months view  
 Default: *4*
 Accepts: *integer*  (1-12)
 
 Option name: `colsLg`
 Description:  add  bootstrap cols-lg-*cols* class to months view
-Default: *3*
-Accepts: *integer*  (1-12)
-
-Option name: `colsXl`
-Description:  add  bootstrap cols-xl-*cols* class to months view
-Default: *3*
-Accepts: *integer*  (1-12)
-
-Option name: `addClassOnClick`
-Description:  add  class to day on click
-Default: *false*
-Accepts: *integer*  (1-12)
-
+Default: *3*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `colsXl`  
+Description:  add  bootstrap cols-xl-*cols* class to months view  
+Default: *3*  
+Accepts: *integer*  (1-12)  
+  
+Option name: `addClassOnClick`  
+Description:  add  class to day on click  
+Default: *false*  
+Accepts: *integer*  (1-12)  
+  
 ## Options example
 You need to choose option when initalizing calendar like this
 ```html
@@ -79,8 +79,8 @@ You need to choose option when initalizing calendar like this
 ```
 
 ## Function refence
-Function name: `appendText`
-Description; Append text to specyfic day.
+Function name: `appendText`  
+Description; Append text to specyfic day.  
 Parameters: *(text*(**string**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*
 
 ## Functions example
