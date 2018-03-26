@@ -1,5 +1,5 @@
-# jQuery and Bootstrap 4 Year Calendar
-This is simple jQuery and Bootstrap 4 calendar. Hope some1 will like it.
+# jQuery and Bootstrap 3/4 Year Calendar
+This is simple jQuery and Bootstrap 3&4 calendar. Hope some1 will like it.
 
 ## DEMO
 [Simple demo](https://allset.pl/zatorck/jquery-bootstrap-year-calendar/examples/basic.html "Simple demo")
@@ -13,10 +13,16 @@ Download `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.cal
 
 ## Basic Usage
 ```html
-  <div class="calendar"></div>
+  <div id="calendar"></div>
   <script> $('#calendar').calendar();</script>
 ```
 
+## Options refenece
+Option name: `boostrapVersion`  
+Description:  choose boostrap compatibile
+Default: *4*  
+Accepts: *integer (3 or 4)* 
+ 
 ## Options refenece
 Option name: `showHeaders`  
 Description:  determine if show months name  
@@ -33,13 +39,43 @@ Description:  max year to show
 Default: *null*  
 Accepts: *integer*  
   
+Option name: `maxDay`  
+Description:  max day able to choose  
+Default: *null*  
+Accepts: *integer*  
+  
+Option name: `maxMonth`    
+Description:  max month able to choose  
+Default: *null*    
+Accepts: *integer*  
+  
+Option name: `maxDayMessage`    
+Description:  Massage to alert when not max day is clicked  
+Default: *You can not choose day from past*  
+Accepts: *string*    
+  
  Option name: `minYear`  
 Description:  min year to show  
 Default: *null*  
 Accepts: *integer*  
   
+Option name: `minDay`  
+Description:  min day able to choose  
+Default: *null*  
+Accepts: *integer*  
+  
+Option name: `minMonth`    
+Description:  min month able to choose  
+Default: *null*    
+Accepts: *integer*  
+  
+Option name: `minDayMessage`    
+Description:  Massage to alert when not min day is clicked  
+Default: *You can not choose day from past*  
+Accepts: *string*    
+    
 Option name: `cols`  
-Description:  add  bootstrap cols-*cols* class to months view  
+Description:  add  bootstrap cols-*cols* class to months view (IGNORE IT IN BOOTSTRAP 3)  
 Default: *12*  
 Accepts: *integer*  (1-12)  
   
@@ -53,13 +89,13 @@ Description:  add  bootstrap cols-md-*cols* class to months view
 Default: *4*
 Accepts: *integer*  (1-12)
 
-Option name: `colsLg`
-Description:  add  bootstrap cols-lg-*cols* class to months view
+Option name: `colsLg`  
+Description:  add  bootstrap cols-lg-*cols* class to months view  
 Default: *3*  
 Accepts: *integer*  (1-12)  
   
 Option name: `colsXl`  
-Description:  add  bootstrap cols-xl-*cols* class to months view  
+Description:  add  bootstrap cols-xl-*cols* class to months view   (IGNORE IT IN BOOTSTRAP 3)  
 Default: *3*  
 Accepts: *integer*  (1-12)  
   
