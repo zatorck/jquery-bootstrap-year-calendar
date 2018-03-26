@@ -5,7 +5,7 @@ This is simple jQuery and Bootstrap 4 calendar. Hope some1 will like it.
 [Simple demo](https://allset.pl/zatorck/jquery-bootstrap-year-calendar/examples/basic.html "Simple demo")
 
 ## Author
-Piotr Zatorski  
+Piotr Zatorski
 Website: [allset.pl](https://allset.pl "Allset")
 
 ## Instalation
@@ -17,6 +17,52 @@ Download `jquery.bootstrap.year.calendar.min.css` and `jquery.bootstrap.year.cal
   <script> $('#calendar').calendar();</script>
 ```
 
+## Options refenece
+Option name: `showHeaders`
+Description:  determine if show months name
+Default: *true*
+Accepts: *boolean*
+
+Option name: `startYear`
+Description:  start calendar from this year
+Default: current year
+Accepts: *integer*
+
+  Option name: `maxYear`
+Description:  max year to show
+Default: *null*
+Accepts: *integer*
+
+  Option name: `minYear`
+Description:  min year to show
+Default: *null*
+Accepts: *integer*
+
+  Option name: `cols`
+Description:  add  bootstrap cols-*cols* class to months view
+Default: *12*
+Accepts: *integer*  (1-12)
+
+Option name: `colsSm`
+Description:  add  bootstrap cols-sm-*cols* class to months view
+Default: *6*
+Accepts: *integer*  (1-12)
+
+Option name: `colMd`
+Description:  add  bootstrap cols-md-*cols* class to months view
+Default: *4*
+Accepts: *integer*  (1-12)
+
+Option name: `colsLg`
+Description:  add  bootstrap cols-lg-*cols* class to months view
+Default: *3*
+Accepts: *integer*  (1-12)
+
+Option name: `colsXl`
+Description:  add  bootstrap cols-xl-*cols* class to months view
+Default: *3*
+Accepts: *integer*  (1-12)
+
 ## Options example
 You need to choose option when initalizing calendar like this
 ```html
@@ -27,51 +73,10 @@ You need to choose option when initalizing calendar like this
 </script>
 ```
 
-## Options refenece
-Option name: `showHeaders`  
-Description:  determine if show months name  
-Default: *true*  
-Accepts: *boolean*  
-  
-Option name: `startYear`  
-Description:  start calendar from this year  
-Default: current year  
-Accepts: *integer*  
-  
-  Option name: `maxYear`  
-Description:  max year to show  
-Default: *null*  
-Accepts: *integer*  
-  
-  Option name: `minYear`  
-Description:  min year to show  
-Default: *null*  
-Accepts: *integer*  
-  
-  Option name: `cols`  
-Description:  add  bootstrap cols-*cols* class to months view  
-Default: *12*  
-Accepts: *integer*  (1-12)  
-  
-Option name: `colsSm`  
-Description:  add  bootstrap cols-sm-*cols* class to months view  
-Default: *6*  
-Accepts: *integer*  (1-12)  
-  
-Option name: `colMd`  
-Description:  add  bootstrap cols-md-*cols* class to months view  
-Default: *4*  
-Accepts: *integer*  (1-12)  
-  
-Option name: `colsLg`  
-Description:  add  bootstrap cols-lg-*cols* class to months view  
-Default: *3*  
-Accepts: *integer*  (1-12)  
-  
-Option name: `colsXl`  
-Description:  add  bootstrap cols-xl-*cols* class to months view  
-Default: *3*  
-Accepts: *integer*  (1-12)  
+## Function refence
+Function name: `appendText`
+Description; Append text to specyfic day.
+Parameters: *(text*(**string**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*
 
 ## Functions example
 ```html
@@ -79,11 +84,6 @@ Accepts: *integer*  (1-12)
 $('.calendar').calendar();
 $('.calendar').calendar('appendText', '(3)', 2018, 3, 4);
 ```
-
-## Function refence
-Function name: `appendText`  
-Description; Append text to specyfic day.  
-Parameters: *(text*(**string**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)* 
 
 #### Protip for *appendText*  function
 If you want to use it with chaning year funcionality, you need to use event called `changeYear`. See this example:
@@ -103,6 +103,21 @@ If you want to use it with chaning year funcionality, you need to use event call
 </script>
 ```
 
+## Events reference
+There are 4 events available at the moment. You can use is simply calling it, like in example.
+
+Event name: `jqyc.changeYearToPrevious`
+Tiggered: When year is changed to previous
+
+Event name: `jqyc.changeYearToNext` .
+Tiggered: When year is changed to next
+
+ Event name: `jqyc.changeYear` .
+Tiggered: When year is changed to any
+
+Event name: `jqyc.dayChoose` .
+Tiggered: When any day is choosen
+
 ## Event example
 ```html
 <div class="container">
@@ -110,13 +125,13 @@ If you want to use it with chaning year funcionality, you need to use event call
 </div>
 <script>
     $('.calendar').calendar();
-	
+
 	//tiggered when year is chaned to previous
     $('.calendar').on('jqyc.changeYearToPrevious', function (event) {
         var currentYear = $(this).find('.jqyc-change-year').data('year');
         console.log(currentYear);
     });
-	
+
 	//tiggered when year is chaned to next
     $('.calendar').on('jqyc.changeYearToNext', function (event) {
         var currentYear = $(this).find('.jqyc-next-year').data('year');
@@ -133,21 +148,6 @@ If you want to use it with chaning year funcionality, you need to use event call
     });
 </script>
 ```
-
-## Events reference
-There are 4 events available at the moment. You can use is simply calling it, like in example.  
-
-Event name: `jqyc.changeYearToPrevious`  
-Tiggered: When year is changed to previous  
-  
-Event name: `jqyc.changeYearToNext` .  
-Tiggered: When year is changed to next  
-  
- Event name: `jqyc.changeYear` .  
-Tiggered: When year is changed to any  
-  
-Event name: `jqyc.dayChoose` .  
-Tiggered: When any day is choosen  
 
 ## l10n
 Localization is very easy. You can simply localize Your calendar by passing options at the calendar declaration. See example above.
