@@ -231,14 +231,14 @@ Tiggered: When valid range is choosen
     });
 
     //tiggered when range is choosen (ONLY FOR MODE: RANGEPICKER)
-    $('.calendar').on('jqyc.rageChoose', function (event) {
-        var startChoosenYear = $(this).data('rangepicker-start-year')];
+    $('.calendar').on('jqyc.rangeChoose', function (event) {
+        var startChoosenYear = $(this).data('rangepicker-start-year');
         var startChoosenMonth = $(this).data('rangepicker-start-month');
         var startChoosenDay = $(this).data('rangepicker-start-day-of-month');
         var startDate = new Date(startChoosenYear, startChoosenMonth, startChoosenDay);
         console.log(startDate);
 
-        var endChoosenYear = $(this).data('rangepicker-end-year')];
+        var endChoosenYear = $(this).data('rangepicker-end-year');
         var endChoosenMonth = $(this).data('rangepicker-end-month');
         var endChoosenDay = $(this).data('rangepicker-end-day-of-month');
         var endDate = new Date(endChoosenYear, endChoosenMonth, endChoosenDay);
@@ -277,3 +277,6 @@ Localization is very easy. You can simply localize Your calendar by passing opti
     });
 </script>
 ```
+
+### Bug report
+If You found any bug please report me on github, I will do my best to repeair it.

@@ -21,34 +21,35 @@
             recalcHeight();
         },
         clearText: function (year, month, day) {
-
             this.find(
                     '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
                     ).removeClass('jqyc-appended').text(day);
             recalcHeight();
         },
         clearTextFromAll: function () {
-
             this.find('.jqyc-appended').each(function () {
                 $(this).removeClass('jqyc-appended').text($(this).data('day-of-month'));
             });
             recalcHeight();
         },
         appendText: function (text, year, month, day, classes = "small text-danger") {
-
             this.find(
                     '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
                     ).addClass('jqyc-appended').append(' <span class="' + classes + '">' + text + '</span>');
             recalcHeight();
         }
     };
+
     $.fn.calendar = function (options) {
         $calendar = this;
         if (methods[options]) {
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof options === 'object' || !options) {
+        } else if (typeof options === 'object' || !options ) {
+
 
             settings = $.extend({}, $.fn.calendar.defaults, options);
+
+
             createWholeCalendar(settings, this);
             $calendar.find('.jqyc-prev-year').on("click", showPreviousYear, );
             $calendar.find('.jqyc-next-year').on("click", showNextYear);
@@ -79,13 +80,14 @@
                 var choosenYear = $(this).data('year');
                 var choosenMonth = $(this).data('month');
                 var choosenDay = $(this).data('day-of-month');
-                if (options.minYear != null && options.minMonth != null && options.minDay != null) {
+
+                if (settings.minYear != null && settings.minMonth != null && settings.minDay != null) {
 
                     var date = new Date(choosenYear, choosenMonth, choosenDay);
-                    if (parseInt(choosenYear) <= parseInt(options.minYear)) {
-                        if (parseInt(choosenMonth) < parseInt(options.minMonth) || (parseInt(choosenMonth) == parseInt(options.minMonth) && parseInt(choosenDay) < parseInt(options.minDay))) {
-                            if (options.minDayMessage != null) {
-                                alert(options.minDayMessage);
+                    if (parseInt(choosenYear) <= parseInt(settings.minYear)) {
+                        if (parseInt(choosenMonth) < parseInt(settings.minMonth) || (parseInt(choosenMonth) == parseInt(settings.minMonth) && parseInt(choosenDay) < parseInt(settings.minDay))) {
+                            if (settings.minDayMessage != null) {
+                                alert(settings.minDayMessage);
                             }
                             $calendar.trigger('jqyc.notMinDayChoose');
                             $calendar.trigger('jqyc.outOfRangeDayChoose');
@@ -94,13 +96,13 @@
                     }
                 }
 
-                if (options.maxYear != null && options.maxMonth != null && options.maxDay != null) {
+                if (settings.maxYear != null && settings.maxMonth != null && settings.maxDay != null) {
 
                     var date = new Date(choosenYear, choosenMonth, choosenDay);
-                    if (parseInt(choosenYear) <= parseInt(options.maxYear)) {
-                        if (parseInt(choosenMonth) < parseInt(options.maxMonth) || (parseInt(choosenMonth) == parseInt(options.maxMonth) && parseInt(choosenDay) < parseInt(options.maxDay))) {
-                            if (options.maxDayMessage != null) {
-                                alert(options.maxDayMessage);
+                    if (parseInt(choosenYear) <= parseInt(settings.maxYear)) {
+                        if (parseInt(choosenMonth) < parseInt(settings.maxMonth) || (parseInt(choosenMonth) == parseInt(settings.maxMonth) && parseInt(choosenDay) < parseInt(settings.maxDay))) {
+                            if (settings.maxDayMessage != null) {
+                                alert(settings.maxDayMessage);
                             }
                             $calendar.trigger('jqyc.notMaxDayChoose');
                             $calendar.trigger('jqyc.outOfRangeDayChoose');
@@ -109,7 +111,7 @@
                     }
                 }
 
-                if (options.mode == 'rangepicker') {
+                if (settings.mode == 'rangepicker') {
                     if ($calendar.data('rangepicker-start-choosen') != true) {
                         $calendar.data('rangepicker-start-day-of-month', choosenDay);
                         $calendar.data('rangepicker-start-month', choosenMonth);
@@ -118,7 +120,7 @@
                         $(this).addClass('jqyc-start-day-of-month');
                     } else if ($calendar.data('rangepicker-end-choosen') != true) {
 
-                        if (options.maxDaysToChoose) {
+                        if (settings.maxDaysToChoose) {
 
 
                             var startDay = [$calendar.data('rangepicker-start-day-of-month'), $calendar.data('rangepicker-start-month'), $calendar.data('rangepicker-start-year')];
@@ -126,9 +128,9 @@
                             var startDate = new Date(startDay[2], startDay[1], startDay[0]);
                             var endDate = new Date(endDay[2], endDay[1], endDay[0]);
                             var daysBettweenDates = Math.round((startDate - endDate) / (1000 * 60 * 60 * 24));
-                            if ((options.maxDaysToChoose - 1) < Math.abs(daysBettweenDates)) {
-                                if (options.maxDaysToChooseMessage) {
-                                    alert(options.maxDaysToChooseMessage + options.maxDaysToChoose)
+                            if ((settings.maxDaysToChoose - 1) < Math.abs(daysBettweenDates)) {
+                                if (settings.maxDaysToChooseMessage) {
+                                    alert(settings.maxDaysToChooseMessage + settings.maxDaysToChoose)
                                 }
                                 $('.jqyc-range-choosen-between').removeClass('jqyc-range-choosen-between');
                                 $calendar.data('rangepicker-end-day-of-month', false);
@@ -155,6 +157,7 @@
                         $(this).addClass('jqyc-end-day-of-month');
                         addRagepickerClassBetweenDays('jqyc-range-choosen-between');
                         $calendar.trigger('jqyc.rangeChoose');
+                        $calendar.trigger('jqyc.rageChoose');  // This is backward compabilty !!!
                     } else {
                         $('.jqyc-range-choosen-between').removeClass('jqyc-range-choosen-between');
                         $calendar.data('rangepicker-end-day-of-month', false);
@@ -171,8 +174,8 @@
                     }
                 }
 
-                if (options.addUniqueClassOnClick && options.mode == 'classic') {
-                    var uniqueClass = options.addUniqueClassOnClick;
+                if (settings.addUniqueClassOnClick && settings.mode == 'classic') {
+                    var uniqueClass = settings.addUniqueClassOnClick;
                     $('.' + uniqueClass).removeClass(uniqueClass);
                     $(this).addClass(uniqueClass);
                 }
@@ -185,7 +188,7 @@
 
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method ' + options + ' does not exist on jQuery.tooltip');
+            $.error('Method ' + settings + ' does not exist on jQuery.tooltip');
         }
 
 
@@ -458,12 +461,12 @@
             var height = $(this).height();
             if (height > biggestHeight) {
                 biggestHeight = height;
-                console.log(height);
             }
         });
         $('.jqyc-month').css('height', biggestHeight);
 
     }
+
     function addRagepickerClassBetweenDays(addClass) {
         if ($calendar.data('rangepicker-end-choosen') != true) {
             return;
@@ -478,13 +481,12 @@
             var endDay = newEndDay;
         }
 
-
         startYear = startDay[2];
         startMonth = startDay[1];
         startDay = startDay[0];
         endYear = endDay[2];
         endMonth = endDay[1];
-        endDay = endDay[0];
+        endDay    =  endDay[0];
         var fullYearsBetweenYears = [];
         startYearToIterate = startYear;
         while (startYearToIterate != endYear) {
