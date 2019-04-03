@@ -223,12 +223,12 @@
             may: "May",
             jun: "June",
             jul: "July",
-            aug: "Augst",
+            aug: "August",
             sep: "September",
             oct: "October",
             nov: "November",
             dec: "December",
-            mn: "Mn",
+            mn: "Mo",
             tu: "Tu",
             we: 'We',
             th: 'Th',
@@ -289,20 +289,20 @@
         var tableSkeleton = '<table class="table table-sm jqyc-table">' +
                 '<thead>' +
                 '<tr class="jqyc-tr jqyc-thead-tr">' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.su + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.mn + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.tu + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.we + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.th + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.fr + '</th>' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.sa + '</th>' +
-                '<th class="jqyc-th" scope="col">' + settings.l10n.su + '</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody></tbody>' +
                 '</table>';
         var $html = $($this);
         $html.append(domSkeleton);
-        var results = jqycGetMonthHTMLStringWithData(firstDayOfCurrentYear, 1, year, 31);
+        var results = jqycGetMonthHTMLStringWithData(firstDayOfCurrentYear+1, 1, year, 31);
         var monthHTMLString = results.monthHTMLString;
         if (settings.showHeaders) {
             $html.find('.jqyc-jan').append('<h5 class="jqyc-header">' + settings.l10n.jan + '</h5>');
