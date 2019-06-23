@@ -99,9 +99,14 @@ Default: *3*
 Accepts: *integer*  (1-12)  
   
 Option name: `mode`  
-Description:  choose mode of using (check mode *xxx* options reference)
+Description:  choose mode of using (check mode *xxx* options reference)   
 Default: *classic*  
 Accepts: *string* (accepts: classic, rangepicker)   
+
+Option name: `startFromSunday`  
+Description: choose to start calendar form sunday    
+Default: *false*  
+Accepts: *boolean* 
 
 
 ## Mode: classic  function refenece

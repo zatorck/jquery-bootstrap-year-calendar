@@ -22,8 +22,8 @@
         },
         clearText: function (year, month, day) {
             this.find(
-                    '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
-                    ).removeClass('jqyc-appended').text(day);
+                '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
+            ).removeClass('jqyc-appended').text(day);
             recalcHeight();
         },
         clearTextFromAll: function () {
@@ -34,8 +34,8 @@
         },
         appendText: function (text, year, month, day, classes = "small text-danger") {
             this.find(
-                    '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
-                    ).addClass('jqyc-appended').append(' <span class="' + classes + '">' + text + '</span>');
+                '.jqyc-not-empty-td[data-day-of-month="' + day + '"].jqyc-not-empty-td[data-month="' + month + '"].jqyc-not-empty-td[data-year="' + year + '"]'
+            ).addClass('jqyc-appended').append(' <span class="' + classes + '">' + text + '</span>');
             recalcHeight();
         }
     };
@@ -44,16 +44,17 @@
         $calendar = this;
         if (methods[options]) {
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof options === 'object' || !options ) {
+        } else if (typeof options === 'object' || !options) {
 
 
             settings = $.extend({}, $.fn.calendar.defaults, options);
 
 
             createWholeCalendar(settings, this);
-            $calendar.find('.jqyc-prev-year').on("click", showPreviousYear, );
+            $calendar.find('.jqyc-prev-year').on("click", showPreviousYear,);
             $calendar.find('.jqyc-next-year').on("click", showNextYear);
             $calendar.find('.jqyc-not-empty-td').on("click", triggerDayChoose);
+
             function showPreviousYear() {
                 var currentYear = parseInt($(this).parent().parent().data('currentYear'));
                 settings.startYear = settings.startYear - 1;
@@ -153,7 +154,6 @@
                         $calendar.data('rangepicker-end-choosen', true);
 
 
-
                         $(this).addClass('jqyc-end-day-of-month');
                         addRagepickerClassBetweenDays('jqyc-range-choosen-between');
                         $calendar.trigger('jqyc.rangeChoose');
@@ -206,6 +206,7 @@
         minMonth: null,
         minDayMessage: 'You can not choose day from past',
         boostrapVersion: 4,
+        startFromSunday: false,
         cols: 12,
         colsSm: 6,
         colsMd: 4,
@@ -237,6 +238,7 @@
             su: 'Su'
         }
     };
+
     function createWholeCalendar(settings, $this) {
         $this.empty();
         var bV = parseInt(settings.boostrapVersion);
@@ -251,9 +253,13 @@
         }
 
 
-
         var year = settings.startYear;
+        var startFromSunday = settings.startFromSunday;
         var firstDayOfCurrentYear = new Date(year, 0).getDay();
+        if (startFromSunday) {
+            firstDayOfCurrentYear += 1;
+        }
+        console.log(firstDayOfCurrentYear);
         var leapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
         if (leapYear) {
             var daysOfFeb = 29;
@@ -262,31 +268,47 @@
         }
 
         var domSkeleton = '<div class="jqyc" ><div class="jqyc-year-chooser border-top border-bottom row align-items-center" data-current-year="' + year + '">' +
-                '<div class="' + colColXs2 + ' text-left">' +
-                '   <button type="button" class="btn btn-primary btn-sm jqyc-prev-year jqyc-change-year" data-year="' + (year - 1) + '">&larr;</button>' +
-                '</div>' +
-                '<div class="' + colColXs2 + ' text-center text-muted"><small>' + (year - 1) + '</small></div>' +
-                '<div class="jqyc-year ' + colColXs4 + '">' + year + '</div>' +
-                '<div class="' + colColXs2 + ' text-center text-muted"><small>' + (year + 1) + '</small></div>' +
-                '<div class="' + colColXs2 + ' text-right">' +
-                '   <button type="button" class="btn btn-primary btn-sm jqyc-next-year jqyc-change-year" data-year="' + (year) + '">&rarr;</button>' +
-                '</div>' +
-                '</div>' +
-                '<div class="jqyc-months mt-4">' +
-                '<div class="jqyc-month jqyc-jan" data-month="1" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-feb" data-month="2" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-mar" data-month="3" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-apr" data-month="4" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-may" data-month="5" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-jun" data-month="6" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-jul" data-month="7" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-aug" data-month="8" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-sep" data-month="9" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-oct" data-month="10" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-nov" data-month="11" data-year="' + year + '"></div>' +
-                '<div class="jqyc-month jqyc-dec" data-month="12" data-year="' + year + '"></div>' +
-                '</div></div>';
-        var tableSkeleton = '<table class="table table-sm jqyc-table">' +
+            '<div class="' + colColXs2 + ' text-left">' +
+            '   <button type="button" class="btn btn-primary btn-sm jqyc-prev-year jqyc-change-year" data-year="' + (year - 1) + '">&larr;</button>' +
+            '</div>' +
+            '<div class="' + colColXs2 + ' text-center text-muted"><small>' + (year - 1) + '</small></div>' +
+            '<div class="jqyc-year ' + colColXs4 + '">' + year + '</div>' +
+            '<div class="' + colColXs2 + ' text-center text-muted"><small>' + (year + 1) + '</small></div>' +
+            '<div class="' + colColXs2 + ' text-right">' +
+            '   <button type="button" class="btn btn-primary btn-sm jqyc-next-year jqyc-change-year" data-year="' + (year) + '">&rarr;</button>' +
+            '</div>' +
+            '</div>' +
+            '<div class="jqyc-months mt-4">' +
+            '<div class="jqyc-month jqyc-jan" data-month="1" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-feb" data-month="2" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-mar" data-month="3" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-apr" data-month="4" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-may" data-month="5" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-jun" data-month="6" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-jul" data-month="7" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-aug" data-month="8" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-sep" data-month="9" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-oct" data-month="10" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-nov" data-month="11" data-year="' + year + '"></div>' +
+            '<div class="jqyc-month jqyc-dec" data-month="12" data-year="' + year + '"></div>' +
+            '</div></div>';
+        if (startFromSunday) {
+            var tableSkeleton = '<table class="table table-sm jqyc-table">' +
+                '<thead>' +
+                '<tr class="jqyc-tr jqyc-thead-tr">' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.su + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.mn + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.tu + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.we + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.th + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.fr + '</th>' +
+                '<th class="jqyc-th" scope="col">' + settings.l10n.sa + '</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody></tbody>' +
+                '</table>';
+        } else {
+            var tableSkeleton = '<table class="table table-sm jqyc-table">' +
                 '<thead>' +
                 '<tr class="jqyc-tr jqyc-thead-tr">' +
                 '<th class="jqyc-th" scope="col">' + settings.l10n.mn + '</th>' +
@@ -300,6 +322,8 @@
                 '</thead>' +
                 '<tbody></tbody>' +
                 '</table>';
+        }
+
         var $html = $($this);
         $html.append(domSkeleton);
         var results = jqycGetMonthHTMLStringWithData(firstDayOfCurrentYear, 1, year, 31);
@@ -437,9 +461,9 @@
                 monthHTMLString = monthHTMLString + '<td class="jqyc-empty-td jqyc-td"></td>';
             } else {
                 monthHTMLString = monthHTMLString +
-                        '<td class="jqyc-not-empty-td jqyc-td jqyc-day-' + d
-                        + ' jqyc-day-of-' + month + '-month" data-month="' + month
-                        + '" data-day-of-month="' + d + '" data-year="' + year + '">' + d + ' </td>';
+                    '<td class="jqyc-not-empty-td jqyc-td jqyc-day-' + d
+                    + ' jqyc-day-of-' + month + '-month" data-month="' + month
+                    + '" data-day-of-month="' + d + '" data-year="' + year + '">' + d + ' </td>';
             }
             if (i % 7 == 0) {
                 monthHTMLString = monthHTMLString + '</tr>'
@@ -449,9 +473,9 @@
         }
 
 
-
         return {
-            monthHTMLString: monthHTMLString, firstDayOfPreviousMonth: (i % 7)};
+            monthHTMLString: monthHTMLString, firstDayOfPreviousMonth: (i % 7)
+        };
     }
 
     function recalcHeight() {
@@ -486,7 +510,7 @@
         startDay = startDay[0];
         endYear = endDay[2];
         endMonth = endDay[1];
-        endDay    =  endDay[0];
+        endDay = endDay[0];
         var fullYearsBetweenYears = [];
         startYearToIterate = startYear;
         while (startYearToIterate != endYear) {
@@ -575,7 +599,6 @@
             }
         }
     }
-
 
 
 }(jQuery));
