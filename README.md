@@ -139,19 +139,24 @@ You need to choose option when initalizing calendar like this
 ## Function refence
 Function name: `appendText`  
 Description: Append text to specyfic day.  
-Parameters: *(text*(**string (also accepts html)**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*
+Parameters: *(text*(**string (also accepts html)**)*, year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*   
 
 Function name: `clearText`  
 Description: Clear text to specyfic day.  
-Parameter: *year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*
+Parameter: *year*(**integer**)*, month*(**integer**)*, day*(**integer**)*, classes*(**string**)*)*   
 
 Function name: `clearTextFromAll`  
-Description: Clear text from all days.
+Description: Clear text from all days.   
 Parameter: *none*
 
 Function name: `recalcHeight`  
-Description: Recalc tables height, in case of columns mismatch
+Description: Recalc tables height, in case of columns mismatch   
 Parameters: *none*
+
+## Mode: rangepicker functions reference
+Function name: `addRange`  
+Description: Add range form rangepicker programmatically (eg. for reading from database)  
+Parameters: *startYear*(**integer**)*, startMonth*(**integer**)*, startDay*(**integer**)*, *endYear*(**integer**)*, *endMonth*(**integer**)*, *endDay*(**integer**)*
 
 ## Functions example
 ```html

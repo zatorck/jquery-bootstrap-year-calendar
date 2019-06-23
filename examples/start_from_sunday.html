@@ -19,17 +19,18 @@
     <link rel="stylesheet" href="../jquery.bootstrap.year.calendar.css">
     <script src="../jquery.bootstrap.year.calendar.js"></script>
     <!--Title-->
-    <title>Jquery Bootstrap Year Calendar  - Start from sunday</title>
+    <title>Jquery Bootstrap Year Calendar - Start from sunday</title>
 </head>
 <body>
 <div class="container">
-            <div class="calendar"></div>
+    <div class="calendar"></div>
 </div>
 <script>
     $('.calendar').calendar({
         startFromSunday: true,
         mode: 'rangepicker'
     });
+    $('.calendar').calendar('addRange', 2019, 3, 4, 2019, 3, 7);
 </script>
 </body>
 </html>
